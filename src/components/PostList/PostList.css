@@ -1,0 +1,24 @@
+.posts-container {
+    font-family: "Roboto", "Helvetica", "Arial", sans-serif;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.posts {
+    width: 30%;
+}
+
+li {
+    list-style-type: none;
+    margin: 10px 0;
+    padding: 0px;
+    text-align: center;
+}
+
+/* .post-box {
+    border: 1px solid black;
+    margin-bottom: 2px;
+    text-align: center;
+} */

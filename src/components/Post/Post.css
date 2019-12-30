@@ -1,0 +1,54 @@
+.box-post-edit {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.posts-edit {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.post-buttons {
+    display: flex; 
+    justify-content: center;
+    align-items: center;
+}
+
+.post-box {
+    /* border: 1px solid black; */
+    margin-bottom: 2px;
+    text-align: center;
+}
+/*edit*/
+.edit-form {
+    display: flex;
+    justify-content: center;
+    margin-top: 30px;
+}
+
+.post-edit-form {
+    padding: 20px;
+    border-radius: 5px;
+}
+
+.post-edit-form-input {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.submit-buttons {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.save-submit {
+    margin-right: 5px;
+} 
+
+.margin-span {
+    width: 15px;
+}
