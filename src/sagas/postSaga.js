@@ -1,5 +1,4 @@
 import { put, takeLatest } from 'redux-saga/effects'
-import { postList } from "./postListSaga"
 
 function* showPost(action) {
     let response = yield fetch(`https://postify-api.herokuapp.com/posts/${action.body.id}`, 
@@ -44,12 +43,12 @@ function* addPost(action) {
         })
     })
     let data = yield response.json()
-    yield put({type: 'LOGIN_USER', payload: data.data})
-    yield put({type: 'SET_REDIRECT', payload: {redirect: true}})
+    yield put({type: 'FETCH_POST_LIST'})
 }
 
-function* deletePost(action) {
-    let response = yield fetch(`https://postify-api.herokuapp.com/posts/${action.body}`,
+function* deletePost() {
+    // let response = yield fetch(`https://postify-api.herokuapp.com/posts/${action.body.id}`, can't identifire id
+    let response = yield fetch(`https://postify-api.herokuapp.com/posts/157`,
     {
         method: "DELETE",
         headers: new Headers({
@@ -58,6 +57,7 @@ function* deletePost(action) {
             'uid': localStorage.getItem("uid")
         })
     })
+    // yield put({type: 'FETCH_POST_LIST'})
 }
 
 export default function* PostSaga() {

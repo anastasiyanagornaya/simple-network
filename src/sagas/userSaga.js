@@ -18,7 +18,9 @@ function* loginUser(action) {
     localStorage.setItem("client", client_token)
     localStorage.setItem("uid", uid_token)
     let data = yield response.json()
-    console.log(data.data)
+    console.log(localStorage.getItem("access-token"))
+    console.log(localStorage.getItem("client"))
+    console.log(localStorage.getItem("uid"))
     yield put({type: 'LOGIN_USER', payload: data.data})
     yield put({type: 'SET_REDIRECT', payload: {redirect: true}})
 }

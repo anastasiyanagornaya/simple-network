@@ -12,12 +12,26 @@ import PageHeader from './components/Header/Header'
 import Post from './components/Post/Post'
 import App from './App'
 
+// const isUserLoggined = () => {
+//   return Boolean(
+//     localStorage.getItem('access-token') &&
+//     localStorage.getItem('uid') &&
+//     localStorage.getItem('client')
+//   )
+// }
+
 const isUserLoggined = () => {
-  return Boolean(
+  if (
     localStorage.getItem('access-token') &&
     localStorage.getItem('uid') &&
     localStorage.getItem('client')
-  )
+  ) {
+    store.dispatch({type: 'FETCH_USER_PROFILE'})
+    return true
+  }
+  else {
+    return false
+  }
 }
 
 const PrivateRoute = ({component: Component, ...rest}) => {
@@ -46,19 +60,19 @@ const PublicRoute = ({component: Component, ...rest}) => {
 }
 
 ReactDOM.render(
-    <Provider store ={store}>
+    <Provider store ={ store }>
       <BrowserRouter>
         <Switch>
-          <Route path='/' component={App}>
+          <Route path='/' component={ App }>
             <PageHeader />
             <PublicRoute path='/' component={ LoginPage } exact /> 
             <PublicRoute path='/posts' component={ LoginPage } /> 
             <PublicRoute path='/register' component={ RegisterPage } exact/> 
             <PublicRoute path='/login' component={ LoginPage } exact /> 
-            <PrivateRoute path='/posts' component={PostList} exact />
-            <Route path='/posts/:id' component={Post} />
-            <PrivateRoute path='/user' component={UserPage} />
-          </Route>
+            <PrivateRoute path='/posts' component={ PostList } exact />
+            <PrivateRoute path='/posts/:id' component={ Post } /> {/*checked*/}
+            <PrivateRoute path='/user' component={ UserPage } />
+          </Route>            
         </Switch>
       </BrowserRouter>  
     </Provider>,

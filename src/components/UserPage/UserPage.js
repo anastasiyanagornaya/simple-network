@@ -8,20 +8,21 @@ import { store } from '../../store/configureStore'
 export class UserPage extends Component {
 
     componentDidMount() {
-        store.dispatch({type: 'FETCH_USER_PROFILE'})
+        store.dispatch({type: 'FETCH_USER_PROFILE'}) //delete
         store.dispatch({type: 'FETCH_POST_LIST'})
     }
     
     render() {
-        const { firs_name, last_name, email } = this.props.user
+        const { id, firs_name, last_name, email } = this.props.user
         const { data } = this.props.post
         return (
             <div className="user-block">
                 <h2 className="user-title">Name: {firs_name} Surname: {last_name}</h2>
                 <h2 className="user-email">email: {email}</h2>
-                <h2>posts:</h2>
+                <h2>posts: </h2>
                 <ul className="posts">
                     {data.map((item) =>
+                        id===item.user_id ? (
                         <li key={item.id}>
                             <Link to={`/posts/${item.id}`}>
                                 <Card>
@@ -36,6 +37,9 @@ export class UserPage extends Component {
                                 </Card>
                             </Link>
                         </li>
+                        )
+                        : 
+                        (<div></div>)
                     )}
                 </ul> 
             </div>
