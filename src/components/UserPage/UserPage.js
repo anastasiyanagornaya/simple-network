@@ -8,7 +8,6 @@ import { store } from '../../store/configureStore'
 export class UserPage extends Component {
 
     componentDidMount() {
-        store.dispatch({type: 'FETCH_USER_PROFILE'}) //delete
         store.dispatch({type: 'FETCH_POST_LIST'})
     }
     

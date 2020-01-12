@@ -11,10 +11,21 @@ function* showPost(action) {
             }
         })   
     let data = yield response.json()
+    console.log(data)
     yield put({type: 'SHOW_POST', payload: data})
 }
 
 function* savePost(action) {
+    console.log(JSON.stringify(action.body.post))
+    console.log(action.body.id)
+    function wait(ms) {
+        var start = Date.now(),
+            now = start;
+        while (now - start < ms) {
+          now = Date.now();
+        }
+    }
+    wait(10000)
     let response = yield fetch(`https://postify-api.herokuapp.com/posts/${action.body.id}`, 
         { 
             method: "PUT",
@@ -27,8 +38,13 @@ function* savePost(action) {
             }) 
         })
     let data = yield response.json()
+    wait(10000)
     yield put({type: 'SAVE_POST', payload: data})
-    }
+    // yield put({type: 'SET_REDUCT', payload: {reduct: false}})
+    // wait(10000)
+    yield put({type: 'FETCH_POST'})//
+    //yield put({type: 'FETCH_POST_LIST'})
+}
 
 function* addPost(action) {
     let response = yield fetch('https://postify-api.herokuapp.com/posts',
@@ -46,9 +62,9 @@ function* addPost(action) {
     yield put({type: 'FETCH_POST_LIST'})
 }
 
-function* deletePost() {
+function* deletePost(action) {
     // let response = yield fetch(`https://postify-api.herokuapp.com/posts/${action.body.id}`, can't identifire id
-    let response = yield fetch(`https://postify-api.herokuapp.com/posts/157`,
+    let response = yield fetch(`https://postify-api.herokuapp.com/posts/${action.body}`,
     {
         method: "DELETE",
         headers: new Headers({
@@ -57,7 +73,8 @@ function* deletePost() {
             'uid': localStorage.getItem("uid")
         })
     })
-    // yield put({type: 'FETCH_POST_LIST'})
+    //let data = yield response.json()
+    yield put({type: 'FETCH_POST_LIST'})
 }
 
 export default function* PostSaga() {

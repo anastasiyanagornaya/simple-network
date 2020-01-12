@@ -12,16 +12,12 @@ import { store } from '../../store/configureStore'
 export class Post extends Component {
     constructor () {
         super()
-        this.state = {
-            post: { 
-                user_id: null,
-                created_at: '',
-                title: '',
-                description: '',
-            },
-            comment: {
-                message: '',
-            },
+        this.state = { 
+            user_id: null,
+            created_at: '',
+            title: '',
+            description: '',
+            message: '',
             reduct: false,
             isAdded: false,
             isVisible: false,
@@ -46,7 +42,8 @@ export class Post extends Component {
 
     handleReduct() {
         this.setState({
-            reduct: true
+            reduct: true,
+            isVisible: false
         })   
     }
 
@@ -71,9 +68,15 @@ export class Post extends Component {
 
     handleSave() {
         const id = this.props.match.params.id || ''
-        const { post } = this.state
+        console.log(this.props)
+        console.log(this.state)
+        const { title, description } = this.state
+        let post = {title,
+                    description}
         store.dispatch({type: 'FETCH_SAVE_POST', body: {id, post}})
-    }
+        //store.dispatch({type: 'FETCH_POST', body: {id, post}} 
+        //this.props.history.push(`/posts/${action.body.id}`)
+        }
 
     handleDelete() {
         const id = this.props.match.params.id || ''
@@ -106,8 +109,16 @@ export class Post extends Component {
     handleSaveComment(e) {
         e.preventDefault()
         const id = this.props.match.params.id || ''
-        const { comment } = this.state
-        store.dispatch({type: 'FETCH_ADD_COMMENT', body: {id, comment}})
+        const { message } = this.state
+        console.log('user', this.props.user.id)
+        console.log('message', message)
+        let post_data = this.props.post
+        let body = {
+            message,
+            commentable_type: "Post",
+            commentable_id: post_data.id
+        }
+        store.dispatch({type: 'FETCH_ADD_COMMENT', body: {id, body}})
     }
 
     render() {
@@ -130,7 +141,6 @@ export class Post extends Component {
                                             autoComplete="current-password"
                                             variant="outlined"
                                             onChange ={this.handleChange} 
-                                            // value ={title}
                                             defaultValue = {title}
                                         />
                                         <TextField
@@ -141,92 +151,68 @@ export class Post extends Component {
                                             autoComplete="current-password"
                                             variant="outlined"
                                             onChange ={this.handleChange} 
-                                            // value ={description}
                                             defaultValue = {description}
                                         />
                                     </div>
-                                    <br/>
-                                    <br/>
-                                    <div className="submit-buttons">
-                                        <Button 
-                                            type ="submit" 
-                                            variant="contained" 
-                                            color="primary" 
-                                            className="save-submit controlled-buttons"
-                                            onClick ={this.handleSave}>
-                                                save
-                                        </Button>
+                                    <div className="">
+                                        {/* <div className="submit-btns"> */}
+                                            <Button 
+                                                type ="submit" 
+                                                variant="contained" 
+                                                color="primary" 
+                                                className="controlled-buttons"
+                                                onClick ={this.handleSave}>
+                                                    save post
+                                            </Button>
+                                            <span className="margin-span">  </span>
+                                            <Button 
+                                                variant="contained" 
+                                                color="secondary" 
+                                                className="controlled-buttons"
+                                                onClick ={this.handleCancel}>
+                                                    cancel
+                                            </Button>
+                                        {/* </div> */}
                                         <span className="margin-span">  </span>
-                                        <Button 
-                                            variant="contained" 
-                                            color="primary" 
-                                            className="save-submit controlled-buttons"
-                                            onClick ={this.handleCancel}>
-                                                cancel
-                                        </Button>
-                                        <span className="margin-span">  </span>
-                                        {/* <Button 
-                                            type ="submit" 
-                                            variant="contained" 
-                                            color="secondary" 
-                                            className="save-submit"
-                                            onClick ={this.handleCancel}>
-                                                cancel
-                                        </Button>    */}
-                                        {!isVisible && <Button 
-                                            type ="submit" 
-                                            variant="contained" 
-                                            color="primary" 
-                                            className="save-submit controlled-buttons"
-                                            onClick ={this.handleShowComments}>
-                                                show comments
-                                        </Button>}
-                                        <span className="margin-span">  </span>
-                                        {isVisible && <Button 
-                                            type ="submit" 
-                                            variant="contained" 
-                                            color="primary" 
-                                            className="save-submit controlled-buttons"
-                                            onClick ={this.handleHideComments}>
-                                                hide comments
-                                        </Button>}
-                                        <span className="margin-span">  </span>
-                                        {isAdded ?
-                                        (<div>
+                                        {!isAdded ?
+                                            (<Button 
+                                                type ="submit" 
+                                                variant="contained" 
+                                                color="primary" 
+                                                className="save-submit controlled-buttons"
+                                                onClick ={this.handleAddComment}>
+                                                    add comment
+                                            </Button>)
+                                            :
+                                        (<div className="comment-edit">
                                             <TextField
                                                 id="outlined-password-input"
-                                                label="title"
+                                                label="message"
                                                 name="message"
                                                 type="text"
                                                 autoComplete="current-password"
                                                 variant="outlined"
                                                 onChange ={this.handleChange} 
                                             />
-                                            <Button 
-                                                type ="submit" 
-                                                variant="contained" 
-                                                color="primary" 
-                                                className="save-submit controlled-buttons"
-                                                onClick ={this.handleSaveComment}>
-                                                    save comment
-                                            </Button>
-                                            <Button 
-                                                variant="contained" 
-                                                color="primary" 
-                                                className="save-submit controlled-buttons"
-                                                onClick ={this.handleCommentCancel}>
-                                                    cancel
-                                            </Button>
-                                        </div>)
-                                        :
-                                        (<Button 
-                                            type ="submit" 
-                                            variant="contained" 
-                                            color="primary" 
-                                            className="save-submit controlled-buttons"
-                                            onClick ={this.handleAddComment}>
-                                                add comment
-                                        </Button>)}
+                                            <div className="comment-edit-buttons">
+                                                <Button 
+                                                    type ="submit" 
+                                                    variant="contained" 
+                                                    color="primary" 
+                                                    className="save-submit controlled-buttons"
+                                                    onClick ={this.handleSaveComment}>
+                                                        save comment
+                                                </Button>
+                                                <span className="margin-span">  </span>
+                                                <Button 
+                                                    variant="contained" 
+                                                    color="secondary" 
+                                                    className="save-submit controlled-buttons"
+                                                    onClick ={this.handleCommentCancel}>
+                                                        cancel
+                                                </Button>
+                                            </div>
+                                        </div>)}
                                     </div>
                                 </CardContent>
                             </CardActionArea>
@@ -248,13 +234,60 @@ export class Post extends Component {
                                                 edit post
                                             </Button>
                                             <span className="margin-span">  </span>
-                                            <Button variant="contained" color="primary" onClick={this.handleDelete}>
+                                            <Button variant="contained" color="secondary" onClick={this.handleDelete}>
                                                 delete post
                                             </Button>
+                                            <span className="margin-span">  </span>
+                                            {!isVisible && 
+                                            <Button 
+                                                type ="submit" 
+                                                variant="contained" 
+                                                color="primary" 
+                                                className="save-submit controlled-buttons"
+                                                onClick ={this.handleShowComments}>
+                                                    show comments
+                                            </Button>}
+                                            {/* <span className="margin-span">  </span> */}
+                                            {isVisible && 
+                                            <div>
+                                                <Button 
+                                                type ="submit" 
+                                                variant="contained" 
+                                                color="primary" 
+                                                className="save-submit controlled-buttons"
+                                                onClick ={this.handleHideComments}>
+                                                    hide comments
+                                            </Button>
+                                            {/* <CommentList /> */}
+                                            </div>
+                                        }
                                         </div>
                                         )
                                         :
-                                        (<div></div>)
+                                        (<div>
+                                            {!isVisible && 
+                                            <Button 
+                                                type ="submit" 
+                                                variant="contained" 
+                                                color="primary" 
+                                                className="save-submit controlled-buttons"
+                                                onClick ={this.handleShowComments}>
+                                                    show comments
+                                            </Button>}
+                                            <span className="margin-span">  </span>
+                                            {isVisible && 
+                                            <div>
+                                            <Button 
+                                                type ="submit" 
+                                                variant="contained" 
+                                                color="primary" 
+                                                className="save-submit controlled-buttons"
+                                                onClick ={this.handleHideComments}>
+                                                    hide comments
+                                            </Button>
+                                            {/* <CommentList /> */}
+                                            </div>}
+                                        </div>)
                                         }
                                     </div>
                                 </CardContent>

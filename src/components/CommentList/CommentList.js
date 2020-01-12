@@ -17,20 +17,27 @@ export class CommentList extends React.Component {
     }
 
     componentDidMount() {
-        //const id = this.props.match.params.id || ''
-        store.dispatch({type: 'FETCH_SHOW_COMMENT'})
+        store.dispatch({type: 'FETCH_SHOW_COMMENTS'})
     }
 
     render() { 
-        const { loading, data } = this.props.comment 
-        // if (loading) {
-        //     return <div className="posts-container"><h2>loading...</h2></div>
-        // }
+        const { data, loading } = this.props.comment 
+        if (loading) {
+            return <div className="posts-container"><h2>loading...</h2></div>
+        }
+        let post_data = this.props.post
+        console.log(post_data.id)
+        let filtered_data = data.filter(function(el) {
+            return el.commentable_type==="Post" &&
+                   el.commentable_id===post_data.id
+        })
+        console.log(filtered_data)
         return (
-            <div className="">
-                <h2>comments: {data.length}</h2>
-                <ul className="">
-                    {data.map((item) =>
+            <div className="comment-template">
+                <h2>comments: {filtered_data.length}</h2>
+                {/* {console.log('post',data)} */}
+                <ul>
+                    {filtered_data.map((item) =>
                         <li key={item.id}>
                             <Link to={`/comments/${item.id}`}>
                                 <Card>
@@ -51,6 +58,7 @@ export class CommentList extends React.Component {
 const mapStateToProps = store => {
     return {
         comment: store.comment,
+        post: store.post.post
     }
 }
 

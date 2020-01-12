@@ -10,6 +10,7 @@ import RegisterPage from './components/RegisterPage/RegisterPage'
 import UserPage from './components/UserPage/UserPage'
 import PageHeader from './components/Header/Header'
 import Post from './components/Post/Post'
+import Comment from './components/Comment/Comment'
 import App from './App'
 
 // const isUserLoggined = () => {
@@ -71,6 +72,7 @@ ReactDOM.render(
             <PublicRoute path='/login' component={ LoginPage } exact /> 
             <PrivateRoute path='/posts' component={ PostList } exact />
             <PrivateRoute path='/posts/:id' component={ Post } /> {/*checked*/}
+            <PrivateRoute path='/comments/:id' component={ Comment } />
             <PrivateRoute path='/user' component={ UserPage } />
           </Route>            
         </Switch>

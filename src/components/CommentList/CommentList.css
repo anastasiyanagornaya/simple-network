@@ -1,0 +1,11 @@
+ul {
+    padding: 0;
+}
+
+.comment-template {
+    width: 30%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-content: flex-start;
+}

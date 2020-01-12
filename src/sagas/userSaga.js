@@ -21,7 +21,8 @@ function* loginUser(action) {
     console.log(localStorage.getItem("access-token"))
     console.log(localStorage.getItem("client"))
     console.log(localStorage.getItem("uid"))
-    yield put({type: 'LOGIN_USER', payload: data.data})
+    //this.props.history.push('/posts')
+    //yield put({type: 'LOGIN_USER', payload: data.data})
     yield put({type: 'SET_REDIRECT', payload: {redirect: true}})
 }
 
@@ -42,8 +43,9 @@ function* registerUser(action) {
     localStorage.setItem("client", client_token)
     localStorage.setItem("uid", uid_token)
     let data = yield response.json()
-    yield put({type: 'LOGIN_USER', payload: data.data})
+    //yield put({type: 'LOGIN_USER', payload: data.data})
     yield put({type: 'SET_REDIRECT', payload: {redirect: true}})
+    //this.props.history.push('/posts')
 }
 
 function* profileUser() {

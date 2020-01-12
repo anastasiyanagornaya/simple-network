@@ -1,7 +1,8 @@
 const initialState = {
     loading: true,
     data: [],
-    post: []
+    post: [],
+    // reduct: false
 }
 
 export function postReducer(state=initialState, action) {
@@ -10,6 +11,7 @@ export function postReducer(state=initialState, action) {
     case 'SHOW_POST': return {...state, post: action.payload}
     case 'SAVE_POST': return {...state, post: action.payload}
     case 'ADD_POST': return {...state, data: action.payload}
+    // case 'SET_REDUCT': return { ...state, reduct: action.payload }
     default:
     return state
     }

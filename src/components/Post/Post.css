@@ -14,14 +14,14 @@
 .post-buttons {
     display: flex; 
     justify-content: center;
-    align-items: center;
+    align-items: flex-start;
 }
 
 .post-box {
-    /* border: 1px solid black; */
     margin-bottom: 2px;
     text-align: center;
 }
+
 /*edit*/
 .edit-form {
     display: flex;
@@ -40,11 +40,31 @@
     align-items: center;
 }
 
-.submit-buttons {
+/* .submit-buttons {
     display: flex;
-    justify-content: flex-end;
-}
+    justify-content: center;
+} */
 
 .margin-span {
     width: 15px;
+}
+
+.comment-edit-buttons {
+    margin-top: 5px;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.comment-edit {
+    margin: 20px;
+}
+
+/* .submit-btns {
+    padding: 0 0 10px 20px;
+} */
+
+.controlled-buttons {
+    padding-left: 10px;
 }
