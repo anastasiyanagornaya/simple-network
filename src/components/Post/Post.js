@@ -27,7 +27,7 @@ export class Post extends Component {
         this.handleChange = this.handleChange.bind(this)
         this.handleSave = this.handleSave.bind(this)
         this.handleCancel = this.handleCancel.bind(this)
-        this.handleCommentCancel = this.handleCommentCancel.bind(this)//the same functionalitys
+        this.handleCommentCancel = this.handleCommentCancel.bind(this)//the same functionality
         this.handleDelete = this.handleDelete.bind(this)
         this.handleShowComments = this.handleShowComments.bind(this)
         this.handleAddComment = this.handleAddComment.bind(this)
@@ -247,7 +247,6 @@ export class Post extends Component {
                                                 onClick ={this.handleShowComments}>
                                                     show comments
                                             </Button>}
-                                            {/* <span className="margin-span">  </span> */}
                                             {isVisible && 
                                             <div>
                                                 <Button 
@@ -258,7 +257,6 @@ export class Post extends Component {
                                                 onClick ={this.handleHideComments}>
                                                     hide comments
                                             </Button>
-                                            {/* <CommentList /> */}
                                             </div>
                                         }
                                         </div>
@@ -285,7 +283,6 @@ export class Post extends Component {
                                                 onClick ={this.handleHideComments}>
                                                     hide comments
                                             </Button>
-                                            {/* <CommentList /> */}
                                             </div>}
                                         </div>)
                                         }

@@ -16,7 +16,6 @@ export class PostList extends React.Component {
     }
 
     componentDidMount() {
-        // this.setState({loading: true})
         store.dispatch({type: 'FETCH_POST_LIST'})
     }
     

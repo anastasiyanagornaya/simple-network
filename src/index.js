@@ -13,14 +13,6 @@ import Post from './components/Post/Post'
 import Comment from './components/Comment/Comment'
 import App from './App'
 
-// const isUserLoggined = () => {
-//   return Boolean(
-//     localStorage.getItem('access-token') &&
-//     localStorage.getItem('uid') &&
-//     localStorage.getItem('client')
-//   )
-// }
-
 const isUserLoggined = () => {
   if (
     localStorage.getItem('access-token') &&

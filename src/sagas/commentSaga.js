@@ -1,7 +1,6 @@
 import { put, takeLatest } from 'redux-saga/effects'
 
-function* showComments() { //loading comments'list
-    // let response = yield fetch(`https://postify-api.herokuapp.com/comments/${action.body.id}`,
+function* showComments() {
     let response = yield fetch('https://postify-api.herokuapp.com/comments', { 
         method: "GET",
         headers: new Headers ({
@@ -18,7 +17,6 @@ function* showComments() { //loading comments'list
 function* showComment(action) { //loading one comment
     console.log(action)
     console.log(action.body)
-    // let response = yield fetch(`https://postify-api.herokuapp.com/comments`, { 
     let response = yield fetch(`https://postify-api.herokuapp.com/comments/${action.body}`, { 
         method: "GET",
         headers: new Headers ({
@@ -34,7 +32,6 @@ function* showComment(action) { //loading one comment
 
 function* addComment(action) {
     console.log('comment', action.body.body)
-    // let response = yield fetch(`https://postify-api.herokuapp.com/comments/${action.body.id}`, { 
     let response = yield fetch(`https://postify-api.herokuapp.com/comments`, { 
         method: "POST",
         body: JSON.stringify(action.body.body),

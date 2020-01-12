@@ -97,20 +97,6 @@ export class AddPost extends Component {
                                         onClick ={this.handleCancel}>
                                             cancel
                                     </Button>                        
-                                    {/* <Button 
-                                        variant="contained" 
-                                        color="primary" 
-                                        className="save-submit"
-                                        onClick ={this.handleShowComments}>
-                                            show comments
-                                    </Button>
-                                    <Button 
-                                        variant="contained" 
-                                        color="primary" 
-                                        className="save-submit"
-                                        onClick ={this.handleAddComments}>
-                                            add comment
-                                    </Button> */}
                                 </div>   
                             </div>                
                         </CardContent>

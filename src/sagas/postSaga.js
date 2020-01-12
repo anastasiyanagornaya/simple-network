@@ -63,7 +63,6 @@ function* addPost(action) {
 }
 
 function* deletePost(action) {
-    // let response = yield fetch(`https://postify-api.herokuapp.com/posts/${action.body.id}`, can't identifire id
     let response = yield fetch(`https://postify-api.herokuapp.com/posts/${action.body}`,
     {
         method: "DELETE",

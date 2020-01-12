@@ -35,7 +35,6 @@ export class CommentList extends React.Component {
         return (
             <div className="comment-template">
                 <h2>comments: {filtered_data.length}</h2>
-                {/* {console.log('post',data)} */}
                 <ul>
                     {filtered_data.map((item) =>
                         <li key={item.id}>
