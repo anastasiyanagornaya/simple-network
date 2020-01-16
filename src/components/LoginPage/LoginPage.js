@@ -14,6 +14,8 @@ export class LoginPage extends Component {
         this.state = {
             email: '',
             password: '',
+            email_error: false,
+            password_error: false
         }
         this.handleChange = this.handleChange.bind(this)
         this.handleSubmit = this.handleSubmit.bind(this)
@@ -27,9 +29,25 @@ export class LoginPage extends Component {
 
     handleSubmit(e) {
         e.preventDefault()
-        store.dispatch({type: 'FETCH_LOGIN_USER', body: this.state})
-    }
+        
+        if (this.state.email == '') {
+            this.setState({
+                email_error: true
+            })
+        }
 
+        if (this.state.password == '') {
+            this.setState({
+                password_error: true
+            })
+        }
+
+    if (!(this.state.email == '') && !(this.state.password == '')) {
+        store.dispatch({type: 'FETCH_LOGIN_USER', body: this.state})
+        }  else {
+        alert('complete all fields!')
+        } 
+    }
     render() {
         const { email, password } = this.state
         if (this.props.user.redirect) {
@@ -37,19 +55,49 @@ export class LoginPage extends Component {
         } 
         return(
             <div className = "login">
-                <Typography variant="h4" gutterBottom>
-                    Login
+                <Typography 
+                    variant="h4" 
+                    gutterBottom>
+                        Login
                 </Typography>
                 <form className = "{classes.root} login_form" noValidate autoComplete="off" onSubmit={this.handleSubmit}>
-                    <TextField type = "email" name = "email" required id="standard-required" label="email" onChange ={this.handleChange} value ={email}  onSubmit = {this.handleSubmit} />
-                    <TextField type = "password" name = "password" required id="standard-required" label="password" onChange ={this.handleChange} value ={password}  onSubmit = {this.handleSubmit} />
+                    <TextField 
+                        error={ this.state.email_error ? true: false}
+                        type = "email" 
+                        name = "email" 
+                        required id="standard-required" 
+                        label="email" 
+                        onChange ={this.handleChange} 
+                        value ={email}  
+                        onSubmit = {this.handleSubmit} 
+                        required = {true}
+                    />
+                    <TextField 
+                        error={ this.state.password_error ? true: false}
+                        type = "password" 
+                        name = "password" 
+                        required id="standard-required" 
+                        label="password" 
+                        onChange ={this.handleChange} 
+                        value ={password}  
+                        onSubmit = {this.handleSubmit} 
+                        required = {true}
+                    />
                     <br/>
-                    <Button type ="submit" className="login-submit button" variant="contained" color="primary">Login</Button>
+                    <Button 
+                        type ="submit" 
+                        className="login-submit button" 
+                        variant="contained" 
+                        color="primary">
+                            Login
+                    </Button>
                 </form>
                 <br/>
                 <Link to="/register">
-                    <Button variant="contained" color="primary">
-                        Register
+                    <Button 
+                        variant="contained" 
+                        color="primary">
+                            Register
                     </Button>
                 </Link>
             </div>

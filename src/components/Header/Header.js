@@ -41,11 +41,11 @@ export class PageHeader extends React.Component {
         <header className='header'>
             <nav className="container">
                 <ul className='header-container'>
-                    <li><Link to="/posts" >Simple Network</Link></li>
+                    <li><Link to="/posts">Simple Network</Link></li>
                     {isUserLoggined() ? 
                     (<React.Fragment>
-                      <li><Link to="/user" className="button">User</Link></li>
-                      <li><Link to="/login" className="button" onClick={this.handleLogout}>Logout</Link></li>
+                      <li><Link to="/user">User</Link></li>
+                      <li><Link to="/login" onClick={this.handleLogout}>Logout</Link></li>
                     </React.Fragment>) 
                     :
                     (<li><Link to="/login" className="button">Login</Link></li>)}

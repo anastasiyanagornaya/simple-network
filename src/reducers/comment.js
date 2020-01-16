@@ -7,6 +7,7 @@ const initialState = {
      switch (action.type) {
         case 'SHOW_COMMENTS': return {...state, loading: false, data: action.payload}//loading comments' list
         case 'SHOW_COMMENT': return {...state, comment: action.payload}//loading one comment
+        // case 'UPDATE_COMMENT': return {...state, comment: action.payload}
         default: return state
      }
  }

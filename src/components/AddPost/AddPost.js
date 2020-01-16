@@ -55,7 +55,7 @@ export class AddPost extends Component {
                             <div className="post-edit-form">
                                 <div>
                                     <TextField
-                                        id="outlined-password-input"
+                                        // id="outlined-password-input"
                                         label="title"
                                         name="title"
                                         type="text"
@@ -63,13 +63,13 @@ export class AddPost extends Component {
                                         variant="outlined"
                                         onChange ={this.handleChange} 
                                         value ={title}
-                                        required
+                                        fullWidth = {true}
                                     />
                                 </div>
                                 <br/>
                                 <FormControl fullWidth >
                                     <TextField
-                                        id="outlined-password-input"
+                                        // id="outlined-password-input"
                                         label="description"
                                         name="description"
                                         type="text"
@@ -78,6 +78,7 @@ export class AddPost extends Component {
                                         variant="outlined"
                                         onChange ={this.handleChange} 
                                         value ={description}
+                                        multiline = {true}
                                     />
                                 </FormControl>
                                 <div className="submit-buttons">
@@ -95,7 +96,7 @@ export class AddPost extends Component {
                                         color="secondary" 
                                         className="save-submit"
                                         onClick ={this.handleCancel}>
-                                            cancel
+                                            clear
                                     </Button>                        
                                 </div>   
                             </div>                

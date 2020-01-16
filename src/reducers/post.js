@@ -8,9 +8,9 @@ export function postReducer(state=initialState, action) {
     switch (action.type) {
     case 'POST_LIST': return {...state, loading: false, data: action.payload}
     case 'SHOW_POST': return {...state, post: action.payload}
-    case 'SAVE_POST': return {...state, post: action.payload}
+    case 'SAVE_POST': return {...state, post: action.payload, isReduct: false}
     case 'ADD_POST': return {...state, data: action.payload}
-    default:
-    return state
+    case 'CLEAR_POST': return {...state, post: action.payload}
+    default: return state
     }
 }  

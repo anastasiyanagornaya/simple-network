@@ -1,7 +1,7 @@
 import { put, takeLatest } from 'redux-saga/effects'
 
 function* showPost(action) {
-    let response = yield fetch(`https://postify-api.herokuapp.com/posts/${action.body.id}`, 
+    let response = yield fetch(`https://postify-api.herokuapp.com/posts/${action.body}`, 
         { 
             method: "GET",
             headers: {
@@ -25,7 +25,7 @@ function* savePost(action) {
           now = Date.now();
         }
     }
-    wait(10000)
+    // wait(10000)
     let response = yield fetch(`https://postify-api.herokuapp.com/posts/${action.body.id}`, 
         { 
             method: "PUT",
@@ -38,15 +38,12 @@ function* savePost(action) {
             }) 
         })
     let data = yield response.json()
-    wait(10000)
+    console.log('savePost', data)
     yield put({type: 'SAVE_POST', payload: data})
-    // yield put({type: 'SET_REDUCT', payload: {reduct: false}})
-    // wait(10000)
-    yield put({type: 'FETCH_POST'})//
-    //yield put({type: 'FETCH_POST_LIST'})
 }
 
 function* addPost(action) {
+    console.log(JSON.stringify(action.body.state))
     let response = yield fetch('https://postify-api.herokuapp.com/posts',
     {
         method: "POST",
@@ -72,8 +69,9 @@ function* deletePost(action) {
             'uid': localStorage.getItem("uid")
         })
     })
-    //let data = yield response.json()
-    yield put({type: 'FETCH_POST_LIST'})
+    console.log('deletePost', response.ok)
+    let post = []
+    yield put({type: 'CLEAR_POST', payload: post})
 }
 
 export default function* PostSaga() {

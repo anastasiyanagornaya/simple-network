@@ -4,13 +4,15 @@
     margin-top: 40px;
 }
 
-.post-edit-form{
+.post-edit-form {
     max-width: 60rem;
 }
 
 .submit-buttons {
     max-width: 60rem;
     margin: 20px auto 0;
+    display: flex;
+    justify-content: center;
 }
 
 .margin-span{

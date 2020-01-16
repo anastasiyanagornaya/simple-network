@@ -3,11 +3,10 @@ import "./Post.css"
 import CommentList from '../CommentList/CommentList.js'
 import Button from '@material-ui/core/Button'
 import {connect} from 'react-redux'
+import { Redirect } from 'react-router-dom'
 import TextField from '@material-ui/core/TextField'
 import { Card, CardActionArea, CardContent } from '@material-ui/core';
 import { store } from '../../store/configureStore'
-
-//import PropTypes from 'prop-types'
 
 export class Post extends Component {
     constructor () {
@@ -27,17 +26,22 @@ export class Post extends Component {
         this.handleChange = this.handleChange.bind(this)
         this.handleSave = this.handleSave.bind(this)
         this.handleCancel = this.handleCancel.bind(this)
-        this.handleCommentCancel = this.handleCommentCancel.bind(this)//the same functionality
+        this.handleCommentClear = this.handleCommentClear.bind(this)
         this.handleDelete = this.handleDelete.bind(this)
         this.handleShowComments = this.handleShowComments.bind(this)
-        this.handleAddComment = this.handleAddComment.bind(this)
+        this.handleHideComments = this.handleHideComments.bind(this)
         this.handleSaveComment = this.handleSaveComment.bind(this)
     }
 
     componentDidMount() {
         const id = this.props.match.params.id || ''
-        const { post } = this.state
-        store.dispatch({type: 'FETCH_POST', body: {id, post}})
+        store.dispatch({type: 'FETCH_POST', body: id})
+        this.setState({
+            title: this.props.post.title,
+            description: this.props.post.description,
+        })   
+        console.log('', this.state.message)
+        console.log('this.props.history.goBack()', this.props.history.goBack())
     }
 
     handleReduct() {
@@ -47,16 +51,19 @@ export class Post extends Component {
         })   
     }
 
-    handleCancel() {
+    handleCancel(e) {
+        e.preventDefault()
         this.setState ({
             reduct: false
         })   
     }
 
-    handleCommentCancel() {
+    handleCommentClear(e) {
+        e.preventDefault()
         this.setState ({
-            isAdded: false
-        })  
+            message: '',
+        })
+        console.log('show clear message', this.state.message)  
     }
 
     handleChange(e) {
@@ -68,22 +75,22 @@ export class Post extends Component {
 
     handleSave() {
         const id = this.props.match.params.id || ''
-        console.log(this.props)
-        console.log(this.state)
+        console.log(this.props.post)
+        console.log('saving', this.state)
         const { title, description } = this.state
         let post = {title,
                     description}
+        console.log(post)
         store.dispatch({type: 'FETCH_SAVE_POST', body: {id, post}})
-        //store.dispatch({type: 'FETCH_POST', body: {id, post}} 
-        //this.props.history.push(`/posts/${action.body.id}`)
+        this.setState({
+            reduct: false
+        })
         }
 
     handleDelete() {
         const id = this.props.match.params.id || ''
-        console.log('id', id)
+        console.log('id post', id)
         store.dispatch({type: 'FETCH_DELETE_POST', body: id})
-        // return <div><Redirect to='/posts' /></div> 
-        this.props.history.push('/posts')
     }
 
     handleShowComments() {
@@ -100,14 +107,17 @@ export class Post extends Component {
         console.log(this.state.isVisible)
     }
 
-    handleAddComment() {
-        this.setState({
-            isAdded: true
-        })
-    }
+    // handleAddComment() {
+    //     this.setState({
+    //         isAdded: true,
+    //     })
+    // }
 
     handleSaveComment(e) {
         e.preventDefault()
+        this.setState({
+            message: '',
+        })
         const id = this.props.match.params.id || ''
         const { message } = this.state
         console.log('user', this.props.user.id)
@@ -124,38 +134,46 @@ export class Post extends Component {
     render() {
         const { user_id, created_at, title, description } = this.props.post
         const { id } = this.props.user
-        const { reduct, isAdded, isVisible } = this.state
+        const { reduct, isVisible } = this.state
+        const { message } = this.state
+        
+        if (!this.props.post.id) {
+            return <div><Redirect to='/posts' /></div> 
+        }
+
         return (
-            <div>
+            <div className="post-form">
                 <form className = "{classes.root} box-post-edit" noValidate autoComplete="off">
-                    {reduct ? 
-                        (<Card>
-                            <CardActionArea>
-                                <CardContent>
-                                    <div className="post-edit-form">
-                                        <TextField
-                                            id="outlined-password-input"
-                                            label="title"
-                                            name="title"
-                                            type="text"
-                                            autoComplete="current-password"
-                                            variant="outlined"
-                                            onChange ={this.handleChange} 
-                                            defaultValue = {title}
-                                        />
-                                        <TextField
-                                            id="outlined-password-input"
-                                            label="description"
-                                            name="description"
-                                            type="text"
-                                            autoComplete="current-password"
-                                            variant="outlined"
-                                            onChange ={this.handleChange} 
-                                            defaultValue = {description}
-                                        />
-                                    </div>
-                                    <div className="">
-                                        {/* <div className="submit-btns"> */}
+                    <Card>
+                        <CardActionArea>
+                            <CardContent>
+                                {reduct ? 
+                                    (
+                                    <div>
+                                        <div className="post-edit-form">
+                                            <TextField
+                                                id="outlined-password-input"
+                                                label="title"
+                                                name="title"
+                                                type="text"
+                                                autoComplete="current-password"
+                                                variant="outlined"
+                                                onChange ={this.handleChange} 
+                                                defaultValue = {title}
+                                            />
+                                            <br/>
+                                            <TextField
+                                                id="outlined-password-input"
+                                                label="description"
+                                                name="description"
+                                                type="text"
+                                                autoComplete="current-password"
+                                                variant="outlined"
+                                                onChange ={this.handleChange} 
+                                                defaultValue = {description}
+                                            />
+                                        </div>
+                                        <div className="submit-btns">
                                             <Button 
                                                 type ="submit" 
                                                 variant="contained" 
@@ -172,56 +190,11 @@ export class Post extends Component {
                                                 onClick ={this.handleCancel}>
                                                     cancel
                                             </Button>
-                                        {/* </div> */}
-                                        <span className="margin-span">  </span>
-                                        {!isAdded ?
-                                            (<Button 
-                                                type ="submit" 
-                                                variant="contained" 
-                                                color="primary" 
-                                                className="save-submit controlled-buttons"
-                                                onClick ={this.handleAddComment}>
-                                                    add comment
-                                            </Button>)
-                                            :
-                                        (<div className="comment-edit">
-                                            <TextField
-                                                id="outlined-password-input"
-                                                label="message"
-                                                name="message"
-                                                type="text"
-                                                autoComplete="current-password"
-                                                variant="outlined"
-                                                onChange ={this.handleChange} 
-                                            />
-                                            <div className="comment-edit-buttons">
-                                                <Button 
-                                                    type ="submit" 
-                                                    variant="contained" 
-                                                    color="primary" 
-                                                    className="save-submit controlled-buttons"
-                                                    onClick ={this.handleSaveComment}>
-                                                        save comment
-                                                </Button>
-                                                <span className="margin-span">  </span>
-                                                <Button 
-                                                    variant="contained" 
-                                                    color="secondary" 
-                                                    className="save-submit controlled-buttons"
-                                                    onClick ={this.handleCommentCancel}>
-                                                        cancel
-                                                </Button>
-                                            </div>
-                                        </div>)}
+                                        </div>
                                     </div>
-                                </CardContent>
-                            </CardActionArea>
-                        </Card>
-                        ) 
-                        :
-                        (<Card>
-                            <CardActionArea>
-                                <CardContent>
+                                    ) 
+                                    :
+                                    (
                                     <div className="posts-edit">
                                         <h3>Created by <i>{user_id}</i> at <i>{created_at}</i></h3>
                                         <div className="post-box">
@@ -229,70 +202,118 @@ export class Post extends Component {
                                             <p>{description}</p>
                                         </div>
                                         {id===user_id ?
-                                        (<div className = "post-buttons">
-                                            <Button variant="contained" color="primary" onClick={this.handleReduct} >
-                                                edit post
-                                            </Button>
-                                            <span className="margin-span">  </span>
-                                            <Button variant="contained" color="secondary" onClick={this.handleDelete}>
-                                                delete post
-                                            </Button>
-                                            <span className="margin-span">  </span>
-                                            {!isVisible && 
-                                            <Button 
-                                                type ="submit" 
-                                                variant="contained" 
-                                                color="primary" 
-                                                className="save-submit controlled-buttons"
-                                                onClick ={this.handleShowComments}>
-                                                    show comments
-                                            </Button>}
-                                            {isVisible && 
-                                            <div>
+                                            (<div className = "post-buttons">
                                                 <Button 
-                                                type ="submit" 
-                                                variant="contained" 
-                                                color="primary" 
-                                                className="save-submit controlled-buttons"
-                                                onClick ={this.handleHideComments}>
-                                                    hide comments
-                                            </Button>
+                                                    variant="contained" 
+                                                    color="primary" 
+                                                    onClick={this.handleReduct} >
+                                                        edit post
+                                                </Button>
+                                                <span className="margin-span">  </span>
+                                                <Button 
+                                                    variant="contained" 
+                                                    color="secondary" 
+                                                    onClick={this.handleDelete}>
+                                                        delete post
+                                                </Button>
+                                                <span className="margin-span">  </span>
+                                                {!isVisible && 
+                                                <Button 
+                                                    type ="submit" 
+                                                    variant="contained" 
+                                                    color="primary" 
+                                                    className="save-submit controlled-buttons"
+                                                    onClick ={this.handleShowComments}>
+                                                        show comments
+                                                </Button>}
+                                                {isVisible && 
+                                                <div>
+                                                    <Button 
+                                                        type ="submit" 
+                                                        variant="contained" 
+                                                        color="primary" 
+                                                        className="save-submit controlled-buttons"
+                                                        onClick ={this.handleHideComments}>
+                                                            hide comments
+                                                </Button>
+                                                </div>
+                                                }
                                             </div>
-                                        }
-                                        </div>
-                                        )
-                                        :
-                                        (<div>
-                                            {!isVisible && 
-                                            <Button 
-                                                type ="submit" 
-                                                variant="contained" 
-                                                color="primary" 
-                                                className="save-submit controlled-buttons"
-                                                onClick ={this.handleShowComments}>
-                                                    show comments
-                                            </Button>}
-                                            <span className="margin-span">  </span>
-                                            {isVisible && 
-                                            <div>
-                                            <Button 
-                                                type ="submit" 
-                                                variant="contained" 
-                                                color="primary" 
-                                                className="save-submit controlled-buttons"
-                                                onClick ={this.handleHideComments}>
-                                                    hide comments
-                                            </Button>
-                                            </div>}
-                                        </div>)
-                                        }
-                                    </div>
+                                            )
+                                            :
+                                            (<div className="post-buttons-comments">
+                                                {!isVisible && 
+                                                <Button 
+                                                    type ="submit" 
+                                                    variant="contained" 
+                                                    color="primary" 
+                                                    className="save-submit controlled-buttons"
+                                                    onClick ={this.handleShowComments}>
+                                                        show comments
+                                                </Button>}
+                                                {isVisible && 
+                                                    <Button 
+                                                    type ="submit" 
+                                                    variant="contained" 
+                                                    color="primary" 
+                                                    className="save-submit controlled-buttons"
+                                                    onClick ={this.handleHideComments}>
+                                                        hide comments
+                                                </Button>
+                                                }
+                                            </div>
+                                            )}
+                                    </div>)
+                                    }
                                 </CardContent>
                             </CardActionArea>
-                        </Card>)
-                        }
+                        </Card>
                 </form>
-                {isVisible && <CommentList />}
+                <br/>
+                {!reduct ? 
+                (<Card>
+                    <CardActionArea>
+                        <CardContent>
+                            <div className="comment-edit">
+                                <TextField
+                                    label="message"
+                                    name="message"
+                                    type="text"
+                                    value={message}
+                                    autoComplete="current-password"
+                                    variant="outlined"
+                                    onChange ={this.handleChange} 
+                                    fullWidth = {true}
+                                    multiline = {true}
+                                />
+                                <div className="comment-edit-buttons">
+                                    <Button 
+                                        type ="submit" 
+                                        variant="contained" 
+                                        color="primary" 
+                                        className="save-submit controlled-buttons"
+                                        onClick ={this.handleSaveComment}>
+                                            add comment
+                                    </Button>
+                                    <span className="margin-span">  </span>
+                                    <Button 
+                                        variant="contained" 
+                                        color="secondary" 
+                                        className="save-submit controlled-buttons"
+                                        onClick ={this.handleCommentClear}>
+                                            clear
+                                    </Button>
+                                </div>
+                            </div>
+                        </CardContent>
+                    </CardActionArea>
+                </Card>)
+                :
+                (<div></div>)}
+                {isVisible ? 
+                (<CommentList />)
+                :
+                (<div></div>)}
             </div>
         )
     }

@@ -59,11 +59,10 @@ ReactDOM.render(
           <Route path='/' component={ App }>
             <PageHeader />
             <PublicRoute path='/' component={ LoginPage } exact /> 
-            <PublicRoute path='/posts' component={ LoginPage } /> 
             <PublicRoute path='/register' component={ RegisterPage } exact/> 
             <PublicRoute path='/login' component={ LoginPage } exact /> 
             <PrivateRoute path='/posts' component={ PostList } exact />
-            <PrivateRoute path='/posts/:id' component={ Post } /> {/*checked*/}
+            <PrivateRoute path='/posts/:id' component={ Post } /> 
             <PrivateRoute path='/comments/:id' component={ Comment } />
             <PrivateRoute path='/user' component={ UserPage } />
           </Route>            

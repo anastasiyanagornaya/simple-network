@@ -35,11 +35,17 @@ export class PostList extends React.Component {
                                 <Link to={`/posts/${item.id}`}>
                                     <Card>
                                         <CardActionArea>
-                                            <Typography gutterBottom variant="h5" component="h2">
-                                                {item.title}
+                                            <Typography 
+                                                gutterBottom 
+                                                variant="h5" 
+                                                component="h2">
+                                                    {item.title}
                                             </Typography>
-                                            <Typography variant="body2" color="textSecondary" component="p">
-                                                {item.description}
+                                            <Typography 
+                                                variant="body2" 
+                                                color="textSecondary" 
+                                                component="p">
+                                                    {item.description}
                                             </Typography>
                                         </CardActionArea>
                                     </Card>

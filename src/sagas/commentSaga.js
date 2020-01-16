@@ -11,6 +11,8 @@ function* showComments() {
     })
     let data = yield response.json()
     console.log(data)
+    data.sort(function(a, b){return (b.created_at < a.created_at)?-1:1})
+    console.log('sorted-data', data)
     yield put({type: 'SHOW_COMMENTS', payload: data})
 }
 
@@ -44,12 +46,11 @@ function* addComment(action) {
     })
     let data = yield response.json()
     console.log('comment-response', data)
-    // yield put({type: 'ADD_COMMENT', payload: data})
     yield put({type: 'FETCH_SHOW_COMMENTS'})
 }
 
 function* saveComment(action) { //edit existing comment
-    console.log(action.body.message)
+    console.log('newMessage', action.body.message)
     console.log(action.body.id)
     let response = yield fetch(`https://postify-api.herokuapp.com/comments/${action.body.id}`, { 
         method: "PUT",
@@ -61,13 +62,14 @@ function* saveComment(action) { //edit existing comment
             'uid': localStorage.getItem("uid")
         })
     })
-    let data = yield response.json()
-    console.log('comment-response', data)
-    yield put({type: 'FETCH_POST'})
+    let comment = yield response.json()
+    console.log('comment-response', comment)
+    yield put({type: 'FETCH_SHOW_COMMENTS'})
 }
 
 function* deleteComment(action) {
-    let response = yield fetch(`https://postify-api.herokuapp.com/comments/${action.body}`, { 
+   let id = JSON.stringify(action.body)
+    let response = yield fetch(`https://postify-api.herokuapp.com/comments/${id}`, { 
         method: "DELETE",
         headers: new Headers ({
             'access-token': localStorage.getItem("access-token"),
@@ -75,9 +77,10 @@ function* deleteComment(action) {
             'uid': localStorage.getItem("uid")
         })
     })
-    let data = yield response.json()
-    console.log(data)
-    // yield put({type: 'ADD_COMMENT', payload: data})
+    console.log('action.body', action.body)
+    let data = yield response
+    console.log('data', data)
+    yield put({type: 'FETCH_SHOW_COMMENTS'})
 }
 
 export default function* commentSaga() {

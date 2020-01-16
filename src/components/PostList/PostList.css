@@ -10,15 +10,13 @@
     width: 30%;
 }
 
+ul {
+    margin: 0
+}
+
 li {
     list-style-type: none;
     margin: 10px 0;
     padding: 0px;
     text-align: center;
 }
-
-/* .post-box {
-    border: 1px solid black;
-    margin-bottom: 2px;
-    text-align: center;
-} */

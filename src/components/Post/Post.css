@@ -23,15 +23,26 @@
 }
 
 /*edit*/
+.post-form {
+    display: flex;
+    justify-content: center;
+    margin-top: 30px;
+    flex-direction: column;
+    align-items: center;
+}
+
 .edit-form {
     display: flex;
     justify-content: center;
     margin-top: 30px;
+
 }
 
 .post-edit-form {
     padding: 20px;
     border-radius: 5px;
+    display: flex;
+    flex-direction: column;
 }
 
 .post-edit-form-input {
@@ -40,17 +51,12 @@
     align-items: center;
 }
 
-/* .submit-buttons {
-    display: flex;
-    justify-content: center;
-} */
-
 .margin-span {
     width: 15px;
 }
 
 .comment-edit-buttons {
-    margin-top: 5px;
+    margin-top: 20px;
     display: flex;
     flex-direction: row;
     justify-content: flex-start;
@@ -59,12 +65,21 @@
 
 .comment-edit {
     margin: 20px;
+    width: 60rem;
 }
 
-/* .submit-btns {
-    padding: 0 0 10px 20px;
-} */
+.submit-btns {
+    display: flex;
+    justify-content: flex-start;
+    padding-left: 20px;
+}
 
 .controlled-buttons {
     padding-left: 10px;
+}
+
+.post-buttons-comments {
+    display: flex;
+    justify-content: center;
+    margin-top: 15px;
 }
