@@ -49,7 +49,6 @@ export class CommentList extends React.Component {
     handleSave() {
         const id = this.props.match.params.id || ''
         let message = this.state
-        console.log(message)
         store.dispatch({type: 'FETCH_SAVE_COMMENT', body: {id, message}})
     }
 
@@ -66,16 +65,10 @@ export class CommentList extends React.Component {
 
     render() { 
         const { data, loading } = this.props.comment
-        
-        
-        
-        console.log('all comments', data)
         if (loading) {
             return <div className="posts-container"><h2>loading...</h2></div>
         }
-        let comment_data = this.props.comment.comment
         let post_data = this.props.post
-        console.log(post_data.id)
         let flt_ids = []
 
         /***************************/
@@ -90,7 +83,6 @@ export class CommentList extends React.Component {
         /***************************/
 
         if (filtered_data.length != 0) {
-            console.log(flt_ids)
 
             function recurseFilter(filterAr){
                 let flt_id = []
@@ -102,7 +94,6 @@ export class CommentList extends React.Component {
                     else
                         return false                    
                 })
-                console.log(flt_id)
 
                 if (flt_cmt_data.length !=0 ){
                     flt_cmt_data = flt_cmt_data.concat(recurseFilter(flt_id))
@@ -117,24 +108,14 @@ export class CommentList extends React.Component {
 
         }
 
-        console.log('data_about_current_comment', this.props.comment.comment)
-        let filtered_comment_data = data.filter(function(el) {
-            return el.commentable_type==="Comment" 
-        })
-        console.log('comments with _post', filtered_data)
-        console.log('comments with _comment', filtered_comment_data)
-
-        const { user_id } = this.props.user
-        const { reduct, add } = this.state
-
-        const { commentable_id, created_at } = this.props.comment.comment
-        let author_id = this.props.comment.comment.user_id
+        // let filtered_comment_data = data.filter(function(el) {
+        //     return el.commentable_type==="Comment" 
+        // })
 
         function subComment(filterID, n){
             let flt_cmt_data = filtered_data.filter(function(el) {
                 return (el.commentable_type==="Comment" && el.commentable_id===filterID)                
             })
-            console.log(flt_cmt_data)
             let overall = []
 
             for (let elem in flt_cmt_data){
@@ -154,11 +135,11 @@ export class CommentList extends React.Component {
                 overall.push(b)
             }
             return overall
+
         }
         const commentsList = data.filter(function(el) {
             return (el.commentable_type==="Post" && el.commentable_id===post_data.id)
         })
-        console.log('commentsList', commentsList);
         return (
             <div>
                 <h2>comments: {filtered_data.length}</h2>

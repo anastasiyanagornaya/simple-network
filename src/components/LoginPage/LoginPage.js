@@ -29,7 +29,6 @@ export class LoginPage extends Component {
 
     handleSubmit(e) {
         e.preventDefault()
-        
         if (this.state.email == '') {
             this.setState({
                 email_error: true

@@ -40,8 +40,6 @@ export class Post extends Component {
             title: this.props.post.title,
             description: this.props.post.description,
         })   
-        console.log('', this.state.message)
-        console.log('this.props.history.goBack()', this.props.history.goBack())
     }
 
     handleReduct() {
@@ -63,7 +61,6 @@ export class Post extends Component {
         this.setState ({
             message: '',
         })
-        console.log('show clear message', this.state.message)  
     }
 
     handleChange(e) {
@@ -75,12 +72,9 @@ export class Post extends Component {
 
     handleSave() {
         const id = this.props.match.params.id || ''
-        console.log(this.props.post)
-        console.log('saving', this.state)
         const { title, description } = this.state
         let post = {title,
                     description}
-        console.log(post)
         store.dispatch({type: 'FETCH_SAVE_POST', body: {id, post}})
         this.setState({
             reduct: false
@@ -89,7 +83,6 @@ export class Post extends Component {
 
     handleDelete() {
         const id = this.props.match.params.id || ''
-        console.log('id post', id)
         store.dispatch({type: 'FETCH_DELETE_POST', body: id})
     }
 
@@ -97,21 +90,13 @@ export class Post extends Component {
         this.setState({
             isVisible: true
         })  
-        console.log(this.state.isVisible)
     }
 
     handleHideComments() {
         this.setState({
             isVisible: false
         })
-        console.log(this.state.isVisible)
     }
-
-    // handleAddComment() {
-    //     this.setState({
-    //         isAdded: true,
-    //     })
-    // }
 
     handleSaveComment(e) {
         e.preventDefault()
@@ -120,8 +105,6 @@ export class Post extends Component {
         })
         const id = this.props.match.params.id || ''
         const { message } = this.state
-        console.log('user', this.props.user.id)
-        console.log('message', message)
         let post_data = this.props.post
         let body = {
             message,

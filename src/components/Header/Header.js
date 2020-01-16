@@ -36,7 +36,6 @@ export class PageHeader extends React.Component {
     }
   
     render() {
-      console.log('store-user', this.props.user)
       return (
         <header className='header'>
             <nav className="container">

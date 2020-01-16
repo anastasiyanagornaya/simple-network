@@ -11,13 +11,10 @@ function* showPost(action) {
             }
         })   
     let data = yield response.json()
-    console.log(data)
     yield put({type: 'SHOW_POST', payload: data})
 }
 
 function* savePost(action) {
-    console.log(JSON.stringify(action.body.post))
-    console.log(action.body.id)
     function wait(ms) {
         var start = Date.now(),
             now = start;
@@ -38,12 +35,10 @@ function* savePost(action) {
             }) 
         })
     let data = yield response.json()
-    console.log('savePost', data)
     yield put({type: 'SAVE_POST', payload: data})
 }
 
 function* addPost(action) {
-    console.log(JSON.stringify(action.body.state))
     let response = yield fetch('https://postify-api.herokuapp.com/posts',
     {
         method: "POST",
@@ -69,7 +64,6 @@ function* deletePost(action) {
             'uid': localStorage.getItem("uid")
         })
     })
-    console.log('deletePost', response.ok)
     let post = []
     yield put({type: 'CLEAR_POST', payload: post})
 }

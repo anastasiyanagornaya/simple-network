@@ -10,7 +10,6 @@ export class UserPage extends Component {
 
     componentDidMount() {
         store.dispatch({type: 'FETCH_POST_LIST'})
-        console.log('window.location.pathname', window.location.pathname)
     }
     
     render() {

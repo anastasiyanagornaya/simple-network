@@ -11,7 +11,6 @@ function* postList() {
             }
         })
         let data = yield response.json()
-        console.log(data)
         data.sort(function(a, b){return (b.created_at < a.created_at)?-1:1})
         yield put({type: 'POST_LIST', payload: data})
 }

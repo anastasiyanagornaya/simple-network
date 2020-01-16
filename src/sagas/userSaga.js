@@ -11,16 +11,12 @@ function* loginUser(action) {
             },
         })
     let access_token = response.headers.get('access-token')
-    console.log('access-token', response.headers.get('access-token'))
     let client_token = response.headers.get('client')
     let uid_token = response.headers.get('uid')
     localStorage.setItem("access-token", access_token)
     localStorage.setItem("client", client_token)
     localStorage.setItem("uid", uid_token)
     let data = yield response.json()
-    console.log(localStorage.getItem("access-token"))
-    console.log(localStorage.getItem("client"))
-    console.log(localStorage.getItem("uid"))
     yield put({type: 'SET_REDIRECT', payload: {redirect: true}})
 }
 
@@ -62,7 +58,6 @@ function* profileUser() {
     localStorage.setItem("uid", uid_token)
     let data = yield response.json()
     yield put({type: 'PROFILE_USER', payload: data.data})
-    console.log(data.data)
 }
 
 export default function* userSaga() {

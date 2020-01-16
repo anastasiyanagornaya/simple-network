@@ -40,7 +40,6 @@ const PrivateRoute = ({component: Component, ...rest}) => {
 }
 
 const PublicRoute = ({component: Component, ...rest}) => {
-  console.log('isUserLoggined() ', isUserLoggined() );
   return (
     <Route {...rest} 
       render={props => 

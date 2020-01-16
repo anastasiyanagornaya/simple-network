@@ -29,7 +29,6 @@ export class AddPost extends Component {
     handleAdd(e) {
         e.preventDefault()
         let state = this.state
-        console.log(state)
         store.dispatch({type: 'FETCH_ADD_POST', body: {state}})
         this.setState({
             title: '',
@@ -55,7 +54,6 @@ export class AddPost extends Component {
                             <div className="post-edit-form">
                                 <div>
                                     <TextField
-                                        // id="outlined-password-input"
                                         label="title"
                                         name="title"
                                         type="text"
@@ -69,7 +67,6 @@ export class AddPost extends Component {
                                 <br/>
                                 <FormControl fullWidth >
                                     <TextField
-                                        // id="outlined-password-input"
                                         label="description"
                                         name="description"
                                         type="text"

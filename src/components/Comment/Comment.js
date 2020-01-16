@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import "./Comment.css"
+import './Comment.css'
 import { store } from '../../store/configureStore'
 import { connect } from 'react-redux'
 import { Card, CardActionArea, CardContent } from '@material-ui/core'
@@ -8,7 +8,7 @@ import TextField from '@material-ui/core/TextField'
 import DeleteIcon from '@material-ui/icons/Delete'
 import EditIcon from '@material-ui/icons/Edit'
 import AddCircleIcon from '@material-ui/icons/AddCircle'
-import SubdirectoryArrowRightIcon from '@material-ui/icons/SubdirectoryArrowRight';
+import SubdirectoryArrowRightIcon from '@material-ui/icons/SubdirectoryArrowRight'
 
 export class Comment extends Component {
     constructor (props) {
@@ -47,26 +47,18 @@ export class Comment extends Component {
     handleSave() {
         const id = this.props.id
         let message = this.state
-        console.log('message', message)
-        console.log('state', this.state)
         store.dispatch({type: 'FETCH_SAVE_COMMENT', body: {id, message}})
-        console.log('id path in post', this.props.post.id)
         this.setState({
             reduct: false,
         })
     }
 
     handleSaveNew() {
-        const id = this.props.id
         let message = this.state.messageAdd
         let commentable_id = this.props.id
         let commentable_type = 'Comment'
         let body= {message, commentable_id, commentable_type}
-        console.log(body)
-        console.log('message', message)
-        console.log('state', this.state)
         store.dispatch({type: 'FETCH_ADD_COMMENT', body: {body}})
-        console.log('id path in post', this.props.post.id)
         this.setState({
             add: false,
         })
@@ -75,7 +67,7 @@ export class Comment extends Component {
     handleDelete() {
         const id = this.props.id
         store.dispatch({type: 'FETCH_DELETE_COMMENT', body: id})
-        console.log('id', id)
+
     }
 
     handleAdd() {
@@ -91,25 +83,13 @@ export class Comment extends Component {
     }
 
     render() {
-        let prevMessage = this.props.comment.comment.message
-        console.log(prevMessage)
         let author_id = this.props.author_id
-        console.log('this.props.comment', this.props.comment)
-        console.log('this.props.comment.comment', this.props.comment.comment)
         let user_id = this.props.user.id
-        console.log('user_id', user_id)
-        console.log('author_id', author_id)
         const { reduct } = this.state
         const { add } = this.state
-        const { message } = this.state
-        console.log('message', this.props.message)
-        console.log('user', this.props.user)
-        console.log('id', this.props.id)
-
         let prelimiter = []
 
         for (let i=1; i <= this.props.recurs_num; i++){
-            console.log(i)
             prelimiter.push(<SubdirectoryArrowRightIcon />) 
         }
 
@@ -136,7 +116,6 @@ export class Comment extends Component {
                                         <p>User: {this.props.user.id}</p>
                                         <br/> 
                                         <p>Created at: {this.props.created_at}</p>
-                                        {/* {this.props.recurs_num ? 'Вложенность:'+this.props.recurs_num : ''} */}
                                     </div> 
                                     {add ? 
                                         (<div className="add-comment">
