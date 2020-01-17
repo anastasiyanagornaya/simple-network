@@ -121,9 +121,6 @@ export class Post extends Component {
         const { reduct, isVisible } = this.state
         const { message } = this.state
         
-        // if (!this.props.post.id) {
-        //     return <div><Redirect to='/posts' /></div> 
-        // }
         return (
             <div className="post-form">
                 <form className = "{classes.root} box-post-edit" noValidate autoComplete="off">

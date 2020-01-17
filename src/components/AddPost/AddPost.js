@@ -1,10 +1,10 @@
 import React, { Component } from 'react'
 import './AddPost.css'
 import {connect} from 'react-redux'
-import FormControl from '@material-ui/core/FormControl';
+import FormControl from '@material-ui/core/FormControl'
 import Button from '@material-ui/core/Button'
 import TextField from '@material-ui/core/TextField'
-import { Card, CardActionArea, CardContent } from '@material-ui/core';
+import { Card, CardActionArea, CardContent } from '@material-ui/core'
 import { store } from '../../store/configureStore'
 
 export class AddPost extends Component {
