@@ -20,6 +20,8 @@ export class Post extends Component {
             reduct: false,
             isAdded: false,
             isVisible: false,
+            loading: false,
+            
         }
 
         this.handleReduct = this.handleReduct.bind(this)
@@ -120,6 +122,12 @@ export class Post extends Component {
         const { id } = this.props.user
         const { reduct, isVisible } = this.state
         const { message } = this.state
+
+        const { post_loading } = this.props.one_post
+        console.log('post_loading ', post_loading )
+        if (post_loading) {
+            return <div className=""><h2>loading...</h2></div>
+        }
         
         return (
             <div className="post-form">
@@ -302,7 +310,8 @@ export class Post extends Component {
 const mapStateToProps = store => {
     return {
         post: store.post.post,
-        user: store.user
+        user: store.user,
+        one_post: store.post
     }
 }
 
