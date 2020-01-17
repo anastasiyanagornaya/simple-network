@@ -84,7 +84,7 @@ export class Post extends Component {
     handleDelete() {
         const id = this.props.match.params.id || ''
         store.dispatch({type: 'FETCH_DELETE_POST', body: id})
-        this.props.history.push('/posts')
+        this.props.history.goBack()
     }
 
     handleShowComments() {

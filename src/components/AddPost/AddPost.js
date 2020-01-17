@@ -78,7 +78,7 @@ export class AddPost extends Component {
                                         multiline = {true}
                                     />
                                 </FormControl>
-                                <div className="submit-buttons">
+                                {/* <div className="submit-buttons"> */}
                                     <Button 
                                         type ="submit" 
                                         variant="contained" 
@@ -95,7 +95,7 @@ export class AddPost extends Component {
                                         onClick ={this.handleCancel}>
                                             clear
                                     </Button>                        
-                                </div>   
+                                {/* </div>    */}
                             </div>                
                         </CardContent>
                     </CardActionArea>
